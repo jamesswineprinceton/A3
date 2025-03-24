@@ -75,7 +75,7 @@ SymTable_T SymTable_new(void) {
     }
     
     /* Initialize all buckets to NULL */
-    for (i = 0; index < BUCKET_COUNT; i++) {
+    for (i = 0; i < BUCKET_COUNT; i++) {
         oSymTable->ppsFirstNodes[i] = NULL;
     }
 
