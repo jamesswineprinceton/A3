@@ -216,7 +216,6 @@ void SymTable_map(SymTable_T oSymTable,
 
     assert(oSymTable != NULL);
     assert(pfApply != NULL);
-    assert(pvExtra != NULL);
 
     for (psCurrentNode = oSymTable->psFirstNode;
          psCurrentNode != NULL;
