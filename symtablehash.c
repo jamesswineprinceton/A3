@@ -60,7 +60,7 @@ bindings whenever a call of SymTable_put causes the number of bindings
 to become too large */
 static void SymTable_expand(SymTable_T oSymTable, 
                             size_t newBucketCount) {
-    struct Node **ppsOldFirstNodes;
+    struct Node **ppsOldFirstNodes = NULL;
     size_t oldBucketCount;
     struct Node **ppsNewFirstNodes;
     struct Node *psCurrentNode;
