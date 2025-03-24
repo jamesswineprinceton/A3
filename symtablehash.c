@@ -61,18 +61,21 @@ static const size_t BUCKET_COUNT = 509;
 
 SymTable_T SymTable_new(void) {
     SymTable_T oSymTable;
+    size_t i;
 
     oSymTable = (SymTable_T)malloc(sizeof(struct SymTable));
     if (oSymTable == NULL) return NULL;
 
+    /* Allocate memory for the array of many first nodes */
     oSymTable->ppsFirstNodes = 
            (struct Node **)malloc(BUCKET_COUNT * sizeof(struct Node *));
     if (oSymTable->ppsFirstNodes == NULL) {
         free(oSymTable);
         return NULL;
     }
-        
-    for (size_t i = 0; i < BUCKET_COUNT; i++) {
+    
+    /* Initialize all buckets to NULL */
+    for (i = 0; index < BUCKET_COUNT; i++) {
         oSymTable->ppsFirstNodes[i] = NULL;
     }
 
@@ -86,10 +89,11 @@ SymTable_T SymTable_new(void) {
 void SymTable_free(SymTable_T oSymTable) {
     struct Node *psCurrentNode;
     struct Node *psNextNode;
+    size_t i;
 
     assert(oSymTable != NULL);
 
-    for (size_t i = 0; i < BUCKET_COUNT; i++) {
+    for (i = 0; i < BUCKET_COUNT; i++) {
         for (psCurrentNode = oSymTable->ppsFirstNodes[i];
              psCurrentNode != NULL;
              psCurrentNode = psNextNode) {
@@ -119,6 +123,7 @@ int SymTable_put(SymTable_T oSymTable,
                  const char *pcKey, 
                  const void *pvValue) {          
     struct Node *psNewNode;
+    size_t i;
 
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
@@ -138,7 +143,7 @@ int SymTable_put(SymTable_T oSymTable,
     strcpy(psNewNode->pcKey, pcKey);
 
     /* Hash the key */
-    size_t i = SymTable_hash(psNewNode->pcKey, BUCKET_COUNT);
+    i = SymTable_hash(psNewNode->pcKey, BUCKET_COUNT);
 
     psNewNode->pvValue = pvValue;
     /* Put the node in the appropriate bucket */
@@ -157,12 +162,13 @@ void *SymTable_replace(SymTable_T oSymTable,
                        const void *pvValue) {
     struct Node *psCurrentNode;
     struct Node *psNextNode;
+    size_t i;
 
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
     /* Hash the key */
-    size_t i = SymTable_hash(pcKey, BUCKET_COUNT);
+    i = SymTable_hash(pcKey, BUCKET_COUNT);
 
     /* Check the corresponding bucket for the key and replace if 
     necessary*/
@@ -185,12 +191,13 @@ void *SymTable_replace(SymTable_T oSymTable,
 int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
     struct Node *psCurrentNode;
     struct Node *psNextNode;
+    size_t i;
 
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
     /* Hash the key */
-    size_t i = SymTable_hash(pcKey, BUCKET_COUNT);
+    i = SymTable_hash(pcKey, BUCKET_COUNT);
 
     /* Check the corresponding bucket for the key */
     for (psCurrentNode = oSymTable->ppsFirstNodes[i];
@@ -208,12 +215,13 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
 void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
     struct Node *psCurrentNode;
     struct Node *psNextNode;
+    size_t i;
 
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
     /* Hash the key */
-    size_t i = SymTable_hash(pcKey, BUCKET_COUNT);
+    i = SymTable_hash(pcKey, BUCKET_COUNT);
 
     /* Check the corresponding bucket for the key and return its 
     value */
@@ -235,12 +243,13 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     struct Node *psCurrentNode;
     struct Node *psNextNode;
     struct Node *psPrevNode = NULL;
+    size_t i;
 
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
     
     /* Hash the key */
-    size_t i = SymTable_hash(pcKey, BUCKET_COUNT);
+    i = SymTable_hash(pcKey, BUCKET_COUNT);
 
     /* Check the corresponding bucket for the key, remove it, and return
     its value */
@@ -277,11 +286,12 @@ void SymTable_map(SymTable_T oSymTable,
     const void *pvExtra) {     
     struct Node *psCurrentNode;
     struct Node *psNextNode;
+    size_t i;
 
     assert(oSymTable != NULL);
     assert(pfApply != NULL);
 
-    for (size_t i = 0; i < BUCKET_COUNT; i++){
+    for (i = 0; i < BUCKET_COUNT; i++){
         for (psCurrentNode = oSymTable->ppsFirstNodes[i];
              psCurrentNode != NULL;
              psCurrentNode = psNextNode) {
