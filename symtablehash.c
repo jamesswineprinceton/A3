@@ -73,19 +73,16 @@ static void SymTable_expand(SymTable_T oSymTable,
     ppsOldFirstNodes = oSymTable->ppsFirstNodes;
     oldBucketCount = oSymTable->bucketCount;
 
-    /* Allocate memory for the array of many first nodes */
+    /* Allocate memory for the new array of many first nodes */
     ppsNewFirstNodes = 
     (struct Node**)malloc(newBucketCount * sizeof(struct Node*));
     if (ppsNewFirstNodes == NULL) {
         return;
     }
 
-    oSymTable->ppsFirstNodes = ppsNewFirstNodes;
-    oSymTable->bucketCount = newBucketCount;
-
     /* Initialize all buckets to NULL */
     for (i = 0; i < newBucketCount; i++) {
-        oSymTable->ppsFirstNodes[i] = NULL;
+        ppsNewFirstNodes[i] = NULL;
     }
 
     /* Hash all old bindings into new buckets */
@@ -95,10 +92,14 @@ static void SymTable_expand(SymTable_T oSymTable,
              psCurrentNode = psNextNode) {
         psNextNode = psCurrentNode->psNextNode;
         newHash = SymTable_hash(psCurrentNode->pcKey, newBucketCount);
-        psCurrentNode->psNextNode = oSymTable->ppsFirstNodes[newHash];
-        oSymTable->ppsFirstNodes[newHash] = psCurrentNode;
+        psCurrentNode->psNextNode = ppsNewFirstNodes[newHash];
+        ppsNewFirstNodes[newHash] = psCurrentNode;
         }
     }
+
+    /* Update the symbol table with the expanded hash table */
+    oSymTable->ppsFirstNodes = ppsNewFirstNodes;
+    oSymTable->bucketCount = newBucketCount;
 
     /* Free the memory in which the old array of many first nodes 
     resides */
