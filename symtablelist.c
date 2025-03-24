@@ -81,32 +81,32 @@ size_t SymTable_getLength(SymTable_T oSymTable) {
 int SymTable_put(SymTable_T oSymTable, 
                  const char *pcKey, 
                  const void *pvValue) {          
-   struct Node *psNewNode;
+    struct Node *psNewNode;
 
-   assert(oSymTable != NULL);
-   assert(pcKey != NULL);
+    assert(oSymTable != NULL);
+    assert(pcKey != NULL);
 
-   /* Check if oSymTable already contains pcKey */
-   if (SymTable_contains(oSymTable, pcKey)) return 0;
+    /* Check if oSymTable already contains pcKey */
+    if (SymTable_contains(oSymTable, pcKey)) return 0;
    
-   psNewNode = (struct Node*)malloc(sizeof(struct Node));
-   if (psNewNode == NULL) return 0;
+    psNewNode = (struct Node*)malloc(sizeof(struct Node));
+    if (psNewNode == NULL) return 0;
 
-   /* Create a defensive copy of the string to which pcKey points */
-   psNewNode->pcKey = (char*)malloc(strlen(pcKey) + 1);
-   if (psNewNode->pcKey == NULL) {
-    free(psNewNode);
-    return 0;
-   }
-   strcpy(psNewNode->pcKey, pcKey);
+    /* Create a defensive copy of the string to which pcKey points */
+    psNewNode->pcKey = (char*)malloc(strlen(pcKey) + 1);
+    if (psNewNode->pcKey == NULL) {
+        free(psNewNode);
+        return 0;
+    }
+    strcpy(psNewNode->pcKey, pcKey);
 
-   psNewNode->pvValue = pvValue;
-   psNewNode->psNextNode = oSymTable->psFirstNode;
+    psNewNode->pvValue = pvValue;
+    psNewNode->psNextNode = oSymTable->psFirstNode;
 
-   oSymTable->psFirstNode = psNewNode;
-   oSymTable->length++;
+    oSymTable->psFirstNode = psNewNode;
+    oSymTable->length++;
 
-   return 1;
+    return 1;
 }
 
 /*--------------------------------------------------------------------*/
@@ -196,6 +196,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
 
             free((char*)psCurrentNode->pcKey);
             free(psCurrentNode);
+            
             oSymTable->length--;
 
             return value;
