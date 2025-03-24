@@ -8,9 +8,9 @@ CFLAGS =
 # Dependency rules for non-file targets
 all: testsymtablelist testsymtablehash
 clobber: clean
- rm -f *~ \#*\#
+	rm -f *~ \#*\#
 clean:
- rm -f testsymtablelist testsymtablehash *.o
+	rm -f testsymtablelist testsymtablehash *.o
 # Dependency rules for file targets
 testsymtablelist: testsymtable.o symtablelist.o
 	$(CC) $(CFLAGS) testsymtable.o symtablelist.o -o testsymtablelist
