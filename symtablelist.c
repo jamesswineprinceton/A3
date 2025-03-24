@@ -14,7 +14,7 @@
 
 struct Node {
     /* The identifying key */
-    const char *pcKey;
+    char *pcKey;
 
     /* The associated data */
     const void *pvValue;
