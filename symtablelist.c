@@ -56,6 +56,7 @@ void SymTable_free(SymTable_T oSymTable) {
 
     assert(oSymTable != NULL);
 
+    /* Walk through the list */
     for (psCurrentNode = oSymTable->psFirstNode;
          psCurrentNode != NULL;
          psCurrentNode = psNextNode) {
@@ -120,6 +121,7 @@ void *SymTable_replace(SymTable_T oSymTable,
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
+    /* Walk through the list */
     for (psCurrentNode = oSymTable->psFirstNode;
          psCurrentNode != NULL;
          psCurrentNode = psNextNode) {
@@ -143,6 +145,7 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
+    /* Walk through the list */
     for (psCurrentNode = oSymTable->psFirstNode;
          psCurrentNode != NULL;
          psCurrentNode = psNextNode) {
@@ -162,6 +165,7 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
+    /* Walk through the list */
     for (psCurrentNode = oSymTable->psFirstNode;
          psCurrentNode != NULL;
          psCurrentNode = psNextNode) {
@@ -184,6 +188,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
 
+    /* Walk through the list */
     for (psCurrentNode = oSymTable->psFirstNode;
          psCurrentNode != NULL;
          psCurrentNode = psNextNode) {
@@ -218,6 +223,7 @@ void SymTable_map(SymTable_T oSymTable,
     assert(oSymTable != NULL);
     assert(pfApply != NULL);
 
+    /* Walk through the list */
     for (psCurrentNode = oSymTable->psFirstNode;
          psCurrentNode != NULL;
          psCurrentNode = psNextNode) {
