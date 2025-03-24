@@ -30,7 +30,7 @@ struct Node {
 struct SymTable {
     /* The address of the first node */
     struct Node *psFirstNode;
-    /* The number of nodes */
+    /* The number of nodes linked */
     size_t length;
 };
 
