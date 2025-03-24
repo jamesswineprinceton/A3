@@ -34,7 +34,7 @@ SymTable_put must add a new binding to oSymTable consisting of key pcKey
 and value pvValue and return 1 (TRUE). Otherwise the function must leave 
 oSymTable unchanged and return 0 (FALSE). If insufficient memory is 
 available, then the function must leave oSymTable unchanged and return 0
-(FALSE).*/
+(FALSE). */
   int SymTable_put(SymTable_T oSymTable,
      const char *pcKey, const void *pvValue);
 
@@ -42,7 +42,7 @@ available, then the function must leave oSymTable unchanged and return 0
 
 /* If oSymTable contains a binding with key pcKey, then SymTable_replace
 must replace the binding's value with pvValue and return the old value. 
-Otherwise it must leave oSymTable unchanged and return NULL.*/
+Otherwise it must leave oSymTable unchanged and return NULL. */
   void *SymTable_replace(SymTable_T oSymTable,
      const char *pcKey, const void *pvValue);
 
