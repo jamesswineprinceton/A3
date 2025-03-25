@@ -181,13 +181,13 @@ int SymTable_put(SymTable_T oSymTable,
     assert(pcKey != NULL);
 
     /* Expand hash table if necessary */
-    if (oSymTable->length == 509) SymTable_expand(oSymTable, 1021);
-    if (oSymTable->length == 1021) SymTable_expand(oSymTable, 2039);
-    if (oSymTable->length == 2039) SymTable_expand(oSymTable, 4093);    
-    if (oSymTable->length == 4093) SymTable_expand(oSymTable, 8191);
-    if (oSymTable->length == 8191) SymTable_expand(oSymTable, 16381);
-    if (oSymTable->length == 16381) SymTable_expand(oSymTable, 32749);
-    if (oSymTable->length == 32749) SymTable_expand(oSymTable, 65521);
+    // if (oSymTable->length == 509) SymTable_expand(oSymTable, 1021);
+    // if (oSymTable->length == 1021) SymTable_expand(oSymTable, 2039);
+    // if (oSymTable->length == 2039) SymTable_expand(oSymTable, 4093);    
+    // if (oSymTable->length == 4093) SymTable_expand(oSymTable, 8191);
+    // if (oSymTable->length == 8191) SymTable_expand(oSymTable, 16381);
+    // if (oSymTable->length == 16381) SymTable_expand(oSymTable, 32749);
+    // if (oSymTable->length == 32749) SymTable_expand(oSymTable, 65521);
         
     /* Check if oSymTable already contains pcKey */
     if (SymTable_contains(oSymTable, pcKey)) return 0;
