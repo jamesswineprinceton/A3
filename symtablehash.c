@@ -60,9 +60,9 @@ bindings whenever a call of SymTable_put causes the number of bindings
 to become too large */
 static void SymTable_expand(SymTable_T oSymTable, 
                             size_t newBucketCount) {
-    struct Node **ppsOldFirstNodes = NULL;
-    size_t oldBucketCount;
+    struct Node **ppsOldFirstNodes;
     struct Node **ppsNewFirstNodes;
+    size_t oldBucketCount;
     struct Node *psCurrentNode;
     struct Node *psNextNode;
     size_t i;
@@ -74,8 +74,7 @@ static void SymTable_expand(SymTable_T oSymTable,
     oldBucketCount = oSymTable->bucketCount;
 
     /* Allocate memory for the new array of many first nodes */
-    ppsNewFirstNodes = 
-    (struct Node**)malloc(newBucketCount * sizeof(struct Node*));
+    ppsNewFirstNodes = (struct Node**)malloc(newBucketCount * sizeof(struct Node*));
     if (ppsNewFirstNodes == NULL) {
         return;
     }
@@ -90,10 +89,10 @@ static void SymTable_expand(SymTable_T oSymTable,
         for (psCurrentNode = ppsOldFirstNodes[i];
              psCurrentNode != NULL;
              psCurrentNode = psNextNode) {
-        psNextNode = psCurrentNode->psNextNode;
-        newHash = SymTable_hash(psCurrentNode->pcKey, newBucketCount);
-        psCurrentNode->psNextNode = ppsNewFirstNodes[newHash];
-        ppsNewFirstNodes[newHash] = psCurrentNode;
+            psNextNode = psCurrentNode->psNextNode;
+            newHash = SymTable_hash(psCurrentNode->pcKey, newBucketCount);
+            psCurrentNode->psNextNode = ppsNewFirstNodes[newHash];
+            ppsNewFirstNodes[newHash] = psCurrentNode;
         }
     }
 
@@ -130,6 +129,7 @@ SymTable_T SymTable_new(void) {
         oSymTable->ppsFirstNodes[i] = NULL;
     }
 
+    oSymTable->bucketCount = initialBucketCount; // Initialize bucketCount
     oSymTable->length = 0;
 
     return oSymTable;
@@ -200,8 +200,8 @@ int SymTable_put(SymTable_T oSymTable,
     /* Create a defensive copy of the string to which pcKey points */
     psNewNode->pcKey = (char*)malloc(strlen(pcKey) + 1);
     if (psNewNode->pcKey == NULL) {
-    free(psNewNode);
-    return 0;
+        free(psNewNode);
+        return 0;
     } 
     strcpy(psNewNode->pcKey, pcKey);
 
@@ -370,5 +370,5 @@ void SymTable_map(SymTable_T oSymTable,
 
    return;
 }
-    
-    
+
+

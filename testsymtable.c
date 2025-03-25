@@ -234,7 +234,7 @@ static void testBasics(void)
  
 
    /* Test SymTable_free(). */
-
+   
    SymTable_free(oSymTable);
 }
 
