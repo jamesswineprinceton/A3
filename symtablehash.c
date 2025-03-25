@@ -55,9 +55,9 @@ static size_t SymTable_hash(const char *pcKey, size_t uBucketCount) {
 
 /*--------------------------------------------------------------------*/
 
-/* Dynamically increases the number of buckets and repositions all 
-bindings whenever a call of SymTable_put causes the number of bindings 
-to become too large */
+/* Dynamically increases the number of buckets to newBucketCount and 
+repositions all bindings whenever a call of SymTable_put causes the 
+number of bindings in oSymTable to become too large */
 static void SymTable_expand(SymTable_T oSymTable, 
                             size_t newBucketCount) {
     struct Node **ppsOldFirstNodes;
