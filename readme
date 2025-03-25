@@ -213,8 +213,8 @@ The non-expanding hash table implementation with:
 -- 500000 bindings consumed  seconds.
 
 The expanding hash table implementation with:
--- 50 bindings consumed  seconds.
--- 500 bindings consumed  seconds.
--- 5000 bindings consumed  seconds.
--- 50000 bindings consumed  seconds.
--- 500000 bindings consumed  seconds.
+-- 50 bindings consumed 0.000000 seconds.
+-- 500 bindings consumed 0.000000 seconds.
+-- 5000 bindings consumed 0.006468 seconds.
+-- 50000 bindings consumed 0.135008 seconds.
+-- 500000 bindings consumed 1.775011 seconds.
