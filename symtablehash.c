@@ -61,7 +61,6 @@ to become too large */
 static void SymTable_expand(SymTable_T oSymTable, 
                             size_t newBucketCount) {
     struct Node **ppsOldFirstNodes;
-    struct Node **ppsNewFirstNodes;
     size_t oldBucketCount;
     struct Node *psCurrentNode;
     struct Node *psNextNode;
@@ -74,14 +73,16 @@ static void SymTable_expand(SymTable_T oSymTable,
     oldBucketCount = oSymTable->bucketCount;
 
     /* Allocate memory for the new array of many first nodes */
-    ppsNewFirstNodes = (struct Node**)malloc(newBucketCount * sizeof(struct Node*));
-    if (ppsNewFirstNodes == NULL) {
+    oSymTable->ppsFirstNodes = 
+    (struct Node**)malloc(newBucketCount * sizeof(struct Node*));
+    if (oSymTable->ppsFirstNodes == NULL) {
+        oSymTable->ppsFirstNodes = ppsOldFirstNodes;
         return;
     }
 
     /* Initialize all buckets to NULL */
     for (i = 0; i < newBucketCount; i++) {
-        ppsNewFirstNodes[i] = NULL;
+        oSymTable->ppsFirstNodes[i] = NULL;
     }
 
     /* Hash all old bindings into new buckets */
@@ -89,15 +90,13 @@ static void SymTable_expand(SymTable_T oSymTable,
         for (psCurrentNode = ppsOldFirstNodes[i];
              psCurrentNode != NULL;
              psCurrentNode = psNextNode) {
-            psNextNode = psCurrentNode->psNextNode;
-            newHash = SymTable_hash(psCurrentNode->pcKey, newBucketCount);
-            psCurrentNode->psNextNode = ppsNewFirstNodes[newHash];
-            ppsNewFirstNodes[newHash] = psCurrentNode;
+        psNextNode = psCurrentNode->psNextNode;
+        newHash = SymTable_hash(psCurrentNode->pcKey, newBucketCount);
+        psCurrentNode->psNextNode = oSymTable->ppsFirstNodes[newHash];
+        oSymTable->ppsFirstNodes[newHash] = psCurrentNode;
         }
     }
 
-    /* Update the symbol table with the expanded hash table */
-    oSymTable->ppsFirstNodes = ppsNewFirstNodes;
     oSymTable->bucketCount = newBucketCount;
 
     /* Free the memory in which the old array of many first nodes 
@@ -129,7 +128,7 @@ SymTable_T SymTable_new(void) {
         oSymTable->ppsFirstNodes[i] = NULL;
     }
 
-    oSymTable->bucketCount = initialBucketCount; // Initialize bucketCount
+    oSymTable->bucketCount = initialBucketCount;
     oSymTable->length = 0;
 
     return oSymTable;
